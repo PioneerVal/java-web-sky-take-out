@@ -4,6 +4,7 @@ import com.github.pagehelper.Page;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.result.PageResult;
 
@@ -29,4 +30,23 @@ public interface EmployeeService {
      */
     void addEmp(EmployeeDTO employeeDTO);
 
+    /**
+     * 修改密码
+     * @param passwordEditDTO
+     */
+    void editPassword(PasswordEditDTO passwordEditDTO);
+
+    /**
+     * 修改员工状态
+     * @param status
+     * @param id
+     */
+    void updateStatus(String status, String id);
+
+    /**
+     * 根据id查询员工信息
+     * @param id
+     * @return
+     */
+    Employee getEmpById(Long id);
 }

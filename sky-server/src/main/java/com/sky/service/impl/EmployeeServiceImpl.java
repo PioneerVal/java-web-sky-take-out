@@ -8,6 +8,7 @@ import com.sky.constant.StatusConstant;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
+import com.sky.dto.PasswordEditDTO;
 import com.sky.entity.Employee;
 import com.sky.exception.AccountLockedException;
 import com.sky.exception.AccountNotFoundException;
@@ -102,6 +103,35 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setUpdateUser(10086L);
 
         employeeMapper.insert(employee);
+    }
+
+    @Override
+    public void editPassword(PasswordEditDTO passwordEditDTO) {
+        //比对就旧密码是否正确
+       Employee employee = employeeMapper.selectEmpById(passwordEditDTO.getEmpId());
+       //获取旧密码的MD5加密值
+       String oldPassword = DigestUtils.md5DigestAsHex(passwordEditDTO.getOldPassword().getBytes());
+        if(!employee.getPassword().equals(oldPassword)){
+            //如果旧密码不一致
+            throw new PasswordErrorException(MessageConstant.PASSWORD_EDIT_FAILED);
+        }
+        //如果到这一步，说明旧密码正确，就可以修改密码
+        String newPassword = DigestUtils.md5DigestAsHex(passwordEditDTO.getNewPassword().getBytes());
+
+        //操作数据库更新密码
+        employeeMapper.updatePassword(passwordEditDTO.getEmpId(),newPassword);
+    }
+
+    @Override
+    public void updateStatus(String status, String id) {
+        employeeMapper.updateStatusById(status,id);
+    }
+
+    @Override
+    public Employee getEmpById(Long id) {
+
+        //根据id查询员工信息
+        return employeeMapper.selectEmpById(id);
     }
 
 
