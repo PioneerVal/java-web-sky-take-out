@@ -134,4 +134,17 @@ public class EmployeeController {
        Employee employee = employeeService.getEmpById(id);
        return Result.success(employee);
     }
+
+    /**
+     * 修改员工信息
+     * @return
+     */
+    @PutMapping
+    public Result updateEmp(@RequestBody EmployeeDTO employeeDTO){
+
+        //调用service层
+        employeeService.updateEmp(employeeDTO);
+
+       return Result.success();
+    }
 }

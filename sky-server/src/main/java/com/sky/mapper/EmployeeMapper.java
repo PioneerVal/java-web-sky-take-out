@@ -40,4 +40,7 @@ public interface EmployeeMapper {
     //修改员工状态
     @Update("update employee set status = #{status} where id = #{id}")
     void updateStatusById(String status, String id);
+
+    //根据ID修改员工信息，需要用到动态sql,使用xml方式
+    void updateEmpById(Employee employee);
 }

@@ -5,6 +5,7 @@ import com.github.pagehelper.PageHelper;
 import com.sky.constant.MessageConstant;
 import com.sky.constant.PasswordConstant;
 import com.sky.constant.StatusConstant;
+import com.sky.context.BaseContext;
 import com.sky.dto.EmployeeDTO;
 import com.sky.dto.EmployeeLoginDTO;
 import com.sky.dto.EmployeePageQueryDTO;
@@ -98,9 +99,8 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
         //设置创建人，修改人
-        //TODO 获取当前登录用户的ID
-        employee.setCreateUser(10086L);
-        employee.setUpdateUser(10086L);
+        employee.setCreateUser(BaseContext.getCurrentId());
+        employee.setUpdateUser(BaseContext.getCurrentId());
 
         employeeMapper.insert(employee);
     }
@@ -134,5 +134,23 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeMapper.selectEmpById(id);
     }
 
+    @Override
+    public void updateEmp(EmployeeDTO employeeDTO) {
+        //补充数据
+        Employee employee = Employee.builder()
+                .id(employeeDTO.getId())
+                .name(employeeDTO.getName())
+                .username(employeeDTO.getUsername())
+                .sex(employeeDTO.getSex())
+                .phone(employeeDTO.getPhone())
+                .idNumber(employeeDTO.getIdNumber())
+                .build();
 
+        //设置更新时间和更新人ID
+        employee.setUpdateTime(LocalDateTime.now());
+        employee.setUpdateUser(BaseContext.getCurrentId());
+
+        //执行更新操作
+        employeeMapper.updateEmpById(employee);
+    }
 }

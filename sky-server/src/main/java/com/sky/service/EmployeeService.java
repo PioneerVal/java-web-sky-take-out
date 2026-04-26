@@ -49,4 +49,10 @@ public interface EmployeeService {
      * @return
      */
     Employee getEmpById(Long id);
+
+    /**
+     * 修改员工信息
+     * @param employeeDTO
+     */
+    void updateEmp(EmployeeDTO employeeDTO);
 }
