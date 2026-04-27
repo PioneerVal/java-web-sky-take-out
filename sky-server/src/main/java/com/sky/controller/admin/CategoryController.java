@@ -46,4 +46,33 @@ public class CategoryController {
         return Result.success(pageResultCategory);
     }
 
+    /**
+     * 修改分类状态
+     * @return
+     */
+    @PostMapping("/status/{status}")
+    public Result updateCategoryStatus(@PathVariable Integer status, Long id){
+        log.info("修改分类状态:分类ID：{}，状态修改为：{}",id,status);
+        categoryService.updateCategoryStatus(id,status);
+        return Result.success();
+    }
+
+    /**
+     * 修改分类
+     * @param categoryDTO
+     * @return
+     */
+    @PutMapping
+   public Result updateCategory(@RequestBody CategoryDTO categoryDTO){
+    log.info("修改分类{}",categoryDTO);
+    categoryService.updateCategory(categoryDTO);
+    return Result.success();
+   }
+
+   @DeleteMapping
+   public Result deleteCategory(long id){
+        log.info("删除分类,id={}",id);
+        categoryService.deleteCategory(id);
+        return Result.success();
+   }
 }
