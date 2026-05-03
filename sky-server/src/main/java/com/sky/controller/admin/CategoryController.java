@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Slf4j
 @RestController
 @RequestMapping("/admin/category")
@@ -35,6 +37,11 @@ public class CategoryController {
         return Result.success();
     }
 
+    /**
+     * 分类分页查询
+     * @param categoryPageQueryDTO
+     * @return
+     */
     @GetMapping("/page")
     public Result<PageResult> getCategoryPage(CategoryPageQueryDTO categoryPageQueryDTO){
         log.info("分页查询分类{}",categoryPageQueryDTO);
@@ -74,5 +81,13 @@ public class CategoryController {
         log.info("删除分类,id={}",id);
         categoryService.deleteCategory(id);
         return Result.success();
+   }
+
+   @GetMapping("/list")
+   public Result<List> getCategoryByType(Long type){
+
+        log.info("根据分类ID查询分类{}",type);
+       List<Category> categoryList = categoryService.getCategoryByType(type);
+       return Result.success(categoryList);
    }
 }

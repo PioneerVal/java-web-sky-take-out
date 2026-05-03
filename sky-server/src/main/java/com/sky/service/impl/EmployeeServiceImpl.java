@@ -95,12 +95,14 @@ public class EmployeeServiceImpl implements EmployeeService {
         employee.setStatus(StatusConstant.ENABLE);
         //设置默认密码，MD5加密
         employee.setPassword(DigestUtils.md5DigestAsHex(PasswordConstant.DEFAULT_PASSWORD.getBytes()));
-        //设置创建时间和修改时间
+
+
+       /* //设置创建时间和修改时间
         employee.setCreateTime(LocalDateTime.now());
         employee.setUpdateTime(LocalDateTime.now());
         //设置创建人，修改人
         employee.setCreateUser(BaseContext.getCurrentId());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+        employee.setUpdateUser(BaseContext.getCurrentId());*/
 
         employeeMapper.insert(employee);
     }
@@ -146,9 +148,9 @@ public class EmployeeServiceImpl implements EmployeeService {
                 .idNumber(employeeDTO.getIdNumber())
                 .build();
 
-        //设置更新时间和更新人ID
+        /*//设置更新时间和更新人ID
         employee.setUpdateTime(LocalDateTime.now());
-        employee.setUpdateUser(BaseContext.getCurrentId());
+        employee.setUpdateUser(BaseContext.getCurrentId());*/
 
         //执行更新操作
         employeeMapper.updateEmpById(employee);

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class CategoryServiceImpl implements CategoryService {
@@ -39,10 +40,11 @@ public class CategoryServiceImpl implements CategoryService {
 
         //0为停用，1为启用，默认为0
         category.setStatus(0);
-        category.setCreateTime(LocalDateTime.now());
+
+        /*category.setCreateTime(LocalDateTime.now());
         category.setUpdateTime(LocalDateTime.now());
         category.setCreateUser(BaseContext.getCurrentId());
-        category.setUpdateUser(BaseContext.getCurrentId());
+        category.setUpdateUser(BaseContext.getCurrentId());*/
 
         //调用mapper层操作数据库
         categoryMapper.insertCategory(category);
@@ -74,10 +76,10 @@ public class CategoryServiceImpl implements CategoryService {
                 .type(categoryDTO.getType())
                 .id(categoryDTO.getId())
                 .build();
-
+/*
         //添加修改时间和修改人
         category.setUpdateTime(LocalDateTime.now());
-        category.setUpdateUser(BaseContext.getCurrentId());
+        category.setUpdateUser(BaseContext.getCurrentId());*/
 
         categoryMapper.updateCategoryById(category);
 
@@ -101,6 +103,11 @@ public class CategoryServiceImpl implements CategoryService {
         //没有关联，删除该分类
         categoryMapper.deleteCategoryById(id);
 
+    }
+
+    @Override
+    public List<Category> getCategoryByType(Long type){
+       return categoryMapper.selectCategoryByType(type);
     }
 
 
