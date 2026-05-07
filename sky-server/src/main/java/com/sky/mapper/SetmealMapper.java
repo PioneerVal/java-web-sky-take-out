@@ -37,9 +37,8 @@ public interface SetmealMapper {
     @AutoFill(OperationType.UPDATE)
     void update(Setmeal setmeal);
 
-    //修改套餐状态
-    @Update("update setmeal set status = #{status} where id = #{id}")
-    void updateStatus(Long id, Integer status);
+    //批量修改套餐状态
+    void updateStatus(List<Long> ids, Integer status);
 
     //根据id批量查询套餐
     List<Setmeal> selectByIds(String[] idsArray);

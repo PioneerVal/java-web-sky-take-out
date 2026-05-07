@@ -32,4 +32,9 @@ public interface SetmealDishMapper {
 
     //批量删除
     void delete(String[] idsArray);
+
+
+    //根据菜品id查询关联的套餐id
+    @Select("select setmeal_id from setmeal_dish where dish_id = #{id}")
+    List<Long> selectSetmealIdByDishId(Long id);
 }

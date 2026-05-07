@@ -8,11 +8,9 @@ import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Category;
 import com.sky.entity.Dish;
 import com.sky.entity.DishFlavor;
+import com.sky.entity.Setmeal;
 import com.sky.exception.DeletionNotAllowedException;
-import com.sky.mapper.CategoryMapper;
-import com.sky.mapper.DishFlavorMapper;
-import com.sky.mapper.DishMapper;
-import com.sky.mapper.SetmealDishMapper;
+import com.sky.mapper.*;
 import com.sky.result.PageResult;
 import com.sky.service.DishService;
 import com.sky.vo.DishVO;
@@ -38,6 +36,8 @@ public class DishServiceImpl implements DishService {
     private SetmealDishMapper setmealDishMapper;
     @Autowired
     private CategoryMapper categoryMapper;
+    @Autowired
+    private SetmealMapper setmealMapper;
 
     @Override
     @Transactional
@@ -105,10 +105,15 @@ public class DishServiceImpl implements DishService {
     @Override
     public void setStatus(Long id, Integer status) {
         //判断菜品是否要改为停售状态，如果需要将菜品停售，则将关联的套餐也停售
-        /*if(status.equals(StatusConstant.DISABLE)){
-            //查询该菜品关联所有的套餐
-        }*/
-        //TODO 待套餐接口完善后，将此功能完善
+        if(status.equals(StatusConstant.DISABLE)){
+            //查询该菜品关联所有的套餐的id
+            List<Long> setmealIds =  setmealDishMapper.selectSetmealIdByDishId(id);
+            if(setmealIds != null && !setmealIds.isEmpty()) {
+                //根据查询的套餐id，批量停售套餐
+                setmealMapper.updateStatus(setmealIds, StatusConstant.DISABLE);
+            }
+        }
+
         dishMapper.updateStatus(id,status);
     }
 

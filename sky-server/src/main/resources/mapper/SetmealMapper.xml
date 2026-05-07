@@ -19,6 +19,16 @@
         </set>
         where id = #{id}
     </update>
+
+    <!--批量修改套餐状态-->
+    <update id="updateStatus">
+        update setmeal set status = #{status} where
+        id in
+        <foreach collection="ids" item="id" separator="," open="(" close=")">
+            #{id}
+        </foreach>
+
+    </update>
     <delete id="delete">
         delete from setmeal where id in
         <foreach collection="idsArray" item="id" separator="," open="(" close=")">
