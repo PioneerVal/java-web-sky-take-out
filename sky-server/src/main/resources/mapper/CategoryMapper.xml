@@ -15,4 +15,13 @@
         </where>
         order by sort
     </select>
+    <select id="selectCategoryByType" resultType="com.sky.entity.Category">
+        select * from category
+        <where>
+            <if test="type != null">
+                type = #{type}
+            </if>
+        </where>
+
+    </select>
 </mapper>

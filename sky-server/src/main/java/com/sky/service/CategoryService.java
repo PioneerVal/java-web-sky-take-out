@@ -46,5 +46,5 @@ public interface CategoryService {
      * @param id
      * @return
      */
-    List<Category> getCategoryByType(Long id);
+    List<Category> getCategoryByType(Integer id);
 }

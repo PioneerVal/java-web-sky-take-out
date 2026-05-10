@@ -50,6 +50,17 @@
         order by d.update_time desc
 
     </select>
+    <select id="listByCategoryIdAndStatus" resultType="com.sky.entity.Dish">
+        select * from dish
+        <where>
+            <if test="categoryId != null">
+                and category_id = #{categoryId}
+            </if>
+        <if test="status != null">
+            and status = #{status}
+        </if>
+        </where>
+    </select>
 
 
     <!--<select id="selectPage" resultType="com.sky.vo.DishVO">

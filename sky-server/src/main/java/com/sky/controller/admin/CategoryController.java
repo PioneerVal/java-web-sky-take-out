@@ -84,7 +84,7 @@ public class CategoryController {
    }
 
    @GetMapping("/list")
-   public Result<List> getCategoryByType(Long type){
+   public Result<List> getCategoryByType(Integer type){
 
         log.info("根据分类ID查询分类{}",type);
        List<Category> categoryList = categoryService.getCategoryByType(type);

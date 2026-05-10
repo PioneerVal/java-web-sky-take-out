@@ -11,10 +11,12 @@ import com.sky.entity.Setmeal;
 import com.sky.entity.SetmealDish;
 import com.sky.exception.DeletionNotAllowedException;
 import com.sky.exception.SetmealEnableFailedException;
+import com.sky.mapper.DishMapper;
 import com.sky.mapper.SetmealDishMapper;
 import com.sky.mapper.SetmealMapper;
 import com.sky.result.PageResult;
 import com.sky.service.SetmealService;
+import com.sky.vo.DishItemVO;
 import com.sky.vo.SetmealVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Service
 public class SetmealServiceImpl implements SetmealService {
@@ -32,6 +35,9 @@ public class SetmealServiceImpl implements SetmealService {
     private SetmealMapper setmealMapper;
     @Autowired
     private SetmealDishMapper setmealDishMapper;
+    @Autowired
+    private DishMapper dishMapper;
+
     @Override
     @Transactional
     public void add(SetmealDTO setmealDTO) {
@@ -92,7 +98,7 @@ public class SetmealServiceImpl implements SetmealService {
         //判断套餐关联的菜品是否为停售状态，如果为停售状态，则不能起售该套餐
         //判断是否要将菜品改为起售状态
         if (Objects.equals(status, StatusConstant.ENABLE)) {
-           // List<SetmealDish> setmealDishes = setmealDishMapper.selectBySetmealId(id);
+            // List<SetmealDish> setmealDishes = setmealDishMapper.selectBySetmealId(id);
             //select d.* from setmeal_dish s left join dish d on s.dish_id = d.id where s.setmeal_id = 32;
             List<Dish> dishes = setmealDishMapper.selectBySetmealIdAndDishId(id);
             for (Dish dish : dishes) {
@@ -122,5 +128,18 @@ public class SetmealServiceImpl implements SetmealService {
         setmealMapper.delete(idsArray);
         //删除套餐和菜品的关联关系
         setmealDishMapper.delete(idsArray);
+    }
+
+    @Override
+    public List<Setmeal> listByCategoryIdAndStatus(Setmeal setmeal) {
+
+        return setmealMapper.selectByCondition(setmeal);
+    }
+
+    @Override
+    public List<DishItemVO> getDishBySetmealId(Long id) {
+        //根据套餐id查询菜品id
+        List<DishItemVO> dishItemVOS = setmealDishMapper.selectDishIdBySetmealId(id);
+        return dishItemVOS;
     }
 }

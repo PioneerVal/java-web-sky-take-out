@@ -45,4 +45,8 @@ public interface SetmealMapper {
 
     //批量删除套餐
     void delete(String[] idsArray);
+
+    //查询套餐,根据分类id和状态
+    @Select("select * from setmeal where category_id = #{categoryId} and status = #{status}")
+    List<Setmeal> selectByCondition(Setmeal setmeal);
 }

@@ -5,7 +5,7 @@ import com.sky.annotation.AutoFill;
 import com.sky.dto.DishPageQueryDTO;
 import com.sky.entity.Dish;
 import com.sky.enumeration.OperationType;
-import com.sky.result.PageResult;
+import com.sky.vo.DishItemVO;
 import com.sky.vo.DishVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -50,4 +50,11 @@ public interface DishMapper {
     //根据分类id查询菜品
     @Select("select * from dish where category_id = #{categoryId}")
     List<Dish> getDishByCategoryId(Long categoryId);
+
+    //根据条件查询菜品信息
+    List<Dish> listByCategoryIdAndStatus(Dish dish);
+
+    //根据菜品id查询对应的菜品信息
+    @Select("select * from dish where id = #{id}")
+    DishItemVO selectDishItemById(Long id);
 }
