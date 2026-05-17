@@ -1,5 +1,6 @@
 package com.sky.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -21,19 +22,19 @@ public class Orders implements Serializable {
     /**
      * 订单状态 1待付款 2待接单 3已接单 4派送中 5已完成 6已取消
      */
-    public static final Integer PENDING_PAYMENT = 1;
-    public static final Integer TO_BE_CONFIRMED = 2;
-    public static final Integer CONFIRMED = 3;
-    public static final Integer DELIVERY_IN_PROGRESS = 4;
-    public static final Integer COMPLETED = 5;
-    public static final Integer CANCELLED = 6;
+    public static final Integer PENDING_PAYMENT = 1;    //待付款
+    public static final Integer TO_BE_CONFIRMED = 2;    //待接单
+    public static final Integer CONFIRMED = 3;//已接单
+    public static final Integer DELIVERY_IN_PROGRESS = 4;//派送中
+    public static final Integer COMPLETED = 5;//已完成
+    public static final Integer CANCELLED = 6;//已取消
 
     /**
      * 支付状态 0未支付 1已支付 2退款
      */
-    public static final Integer UN_PAID = 0;
-    public static final Integer PAID = 1;
-    public static final Integer REFUND = 2;
+    public static final Integer UN_PAID = 0;//待付款
+    public static final Integer PAID = 1;//已支付
+    public static final Integer REFUND = 2;//退款
 
     private static final long serialVersionUID = 1L;
 
@@ -52,9 +53,11 @@ public class Orders implements Serializable {
     private Long addressBookId;
 
     //下单时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime orderTime;
 
     //结账时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime checkoutTime;
 
     //支付方式 1微信，2支付宝
@@ -91,12 +94,14 @@ public class Orders implements Serializable {
     private LocalDateTime cancelTime;
 
     //预计送达时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime estimatedDeliveryTime;
 
     //配送状态  1立即送出  0选择具体时间
     private Integer deliveryStatus;
 
     //送达时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime deliveryTime;
 
     //打包费

@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 @Mapper
@@ -43,4 +44,8 @@ public interface SetmealDishMapper {
     @Select("select sd.name as name ,sd.copies as copies,d.description as description,d.image as image " +
             "from setmeal_dish sd left join dish d on sd.dish_id = d.id where setmeal_id = #{setmealId}" )
     List<DishItemVO> selectDishIdBySetmealId(Long setmealId);
+
+    //根据套餐id计算套餐价格
+    @Select("select sum(d.price * sd.copies) from setmeal_dish sd left join dish d on sd.dish_id = d.id where setmeal_id = #{setmealId}")
+    BigDecimal sumPriceBySetmealId(Long setmealId);
 }

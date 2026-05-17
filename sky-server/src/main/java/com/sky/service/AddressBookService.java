@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface AddressBookService {
 
-    //根据id查询收货地址
+    /**
+     * 查询当前用户的收货地址列表
+     * @return List<AddressBook>
+     */
     List<AddressBook> list(Long userId);
 
     /**
@@ -16,4 +19,29 @@ public interface AddressBookService {
      * @param addressBook
      */
     void addAddressBook(AddressBook addressBook);
+
+    /**
+     * 设置默认地址
+     * @param id
+     */
+    void setDefault(AddressBook addressBook);
+
+    /**
+     * 根据id查询地址
+     * @param id
+     * @return
+     */
+    AddressBook getAddressBookById(Long id);
+
+    /**
+     * 删除地址
+     * @param id
+     */
+    void removeAddressById(Long id);
+
+    /**
+     * 修改地址
+     * @param addressBook
+     */
+    void updateById(AddressBook addressBook);
 }
